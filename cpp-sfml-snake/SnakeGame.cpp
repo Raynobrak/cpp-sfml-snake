@@ -9,17 +9,23 @@ SnakeGame::SnakeGame(SnakeGameSettings settings) : settings_(settings), map_(set
 }
 
 void SnakeGame::run() {
-	sf::Clock clock;
+	moveClock_.restart();
 	while (window_.isOpen()) {
 		handleEvents();
 
-		if (clock.getElapsedTime().asSeconds() >= settings_.timeBetweenMoves) {
+		if (moveClock_.getElapsedTime().asSeconds() >= settings_.timeBetweenMoves) {
 			snake_.move();
-			clock.restart();
+			moveClock_.restart();
 		}
 
 		render();
 	}
+}
+
+void SnakeGame::changeSnakeDir(Direction newDir) {
+	snake_.changeDirection(newDir);
+	snake_.move();
+	moveClock_.restart();
 }
 
 void SnakeGame::handleEvents() {
@@ -32,16 +38,16 @@ void SnakeGame::handleEvents() {
 		case sf::Event::KeyPressed:
 			switch (event.key.code) {
 			case sf::Keyboard::Up:
-				snake_.changeDirection(Direction::Up);
+				changeSnakeDir(Direction::Up);
 				break;
 			case sf::Keyboard::Down:
-				snake_.changeDirection(Direction::Down);
+				changeSnakeDir(Direction::Down);
 				break;
 			case sf::Keyboard::Left:
-				snake_.changeDirection(Direction::Left);
+				changeSnakeDir(Direction::Left);
 				break;
 			case sf::Keyboard::Right:
-				snake_.changeDirection(Direction::Right);
+				changeSnakeDir(Direction::Right);
 				break;
 			}
 			break;

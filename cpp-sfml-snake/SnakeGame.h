@@ -10,6 +10,7 @@ public:
 	SnakeGame(SnakeGameSettings settings = DEFAULT_SETTINGS);
 	void run();
 private:
+	void changeSnakeDir(Direction newDir);
 	void handleEvents();
 	void render();
 	sf::RenderWindow window_;
@@ -17,5 +18,7 @@ private:
 	SnakeGameSettings settings_;
 	SnakeMap map_;
 	Snake snake_;
+
+	sf::Clock moveClock_;
 };
 

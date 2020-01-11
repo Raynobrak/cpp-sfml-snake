@@ -37,6 +37,9 @@ void SnakeGame::handleEvents() {
 			break;
 		case sf::Event::KeyPressed:
 			switch (event.key.code) {
+			case sf::Keyboard::R:
+				snake_.respawn();
+				break;
 			case sf::Keyboard::Up:
 				changeSnakeDir(Direction::Up);
 				break;
@@ -61,12 +64,16 @@ void SnakeGame::render() {
 	const float tileWidth = static_cast<float>(settings_.windowWidth) / static_cast<float>(settings_.mapWidth);
 	const float tileHeight = static_cast<float>(settings_.windowHeight) / static_cast<float>(settings_.mapHeight);
 
+	static const sf::Color SNAKE_ALIVE_COLOR = { 20,108,156 };
+	static const sf::Color SNAKE_DEAD_COLOR = { 127,39,36 };
+	static const sf::Color FOOD_COLOR = { 69,186,108 };
+
 	auto foods = map_.getFoods();
 	for (const auto& foodPos : foods) {
 		sf::RectangleShape shape;
 		shape.setPosition(foodPos.x * tileWidth, foodPos.y * tileHeight);
 		shape.setSize({ tileWidth, tileHeight });
-		shape.setFillColor(sf::Color::Red);
+		shape.setFillColor(FOOD_COLOR);
 		window_.draw(shape);
 	}
 
@@ -75,9 +82,9 @@ void SnakeGame::render() {
 		sf::RectangleShape shape;
 		shape.setPosition(pos.x * tileWidth, pos.y * tileHeight);
 		shape.setSize({ tileWidth, tileHeight });
-		shape.setFillColor(sf::Color::Green);
-		shape.setOutlineThickness(1.f);
-		shape.setOutlineColor(sf::Color::Black);
+		shape.setFillColor(snake_.isDead() ? SNAKE_DEAD_COLOR : SNAKE_ALIVE_COLOR);
+		//shape.setOutlineThickness(1.f);
+		//shape.setOutlineColor(sf::Color::Black);
 		window_.draw(shape);
 	}
 

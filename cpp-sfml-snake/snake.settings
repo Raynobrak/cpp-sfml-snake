@@ -4,5 +4,5 @@ map_height = 15
 window_width = 400
 window_height = 300
 
-time_between_moves = 0.5
+time_between_moves = 0.2
 

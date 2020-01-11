@@ -39,7 +39,12 @@ void SnakeMap::eatFoodAt(sf::Vector2i position) {
 	}
 }
 
+sf::Vector2i SnakeMap::centerPos() const {
+	return sf::Vector2i(width_ / 2, height_ / 2);
+}
+
 void SnakeMap::spawnNewFood() {
+	// todo : empêcher la nourriture d'apparaître *sur* le snake
 	for (int i = 0; i < 10; ++i) {
 		sf::Vector2i randomPosition;
 		do {
@@ -50,7 +55,4 @@ void SnakeMap::spawnNewFood() {
 
 		foodPositions_.push_back(randomPosition);
 	}
-	
 }
-
-

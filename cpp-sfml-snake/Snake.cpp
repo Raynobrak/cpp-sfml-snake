@@ -1,8 +1,8 @@
 #include "Snake.h"
 
-Snake::Snake(SnakeMap& map, sf::Vector2i startPos) : map_(map), isDead_(false), snakeBody_() {
+Snake::Snake(SnakeMap& map) : map_(map), isDead_(false), snakeBody_() {
 	direction_ = directionToUnitVector(Direction::Right);
-	snakeBody_.push_back(startPos);
+	snakeBody_.push_back(map_.centerPos());
 }
 
 std::vector<sf::Vector2i> Snake::getBody() const {
@@ -10,6 +10,10 @@ std::vector<sf::Vector2i> Snake::getBody() const {
 }
 
 void Snake::move() {
+	if (isDead_) {
+		return;
+	}
+
 	sf::Vector2i nextHeadPos = snakeBody_.front() + direction_;
 
 	// Checks if the snake collides with the body.
@@ -35,6 +39,16 @@ void Snake::move() {
 
 void Snake::changeDirection(Direction newDir) {
 	direction_ = directionToUnitVector(newDir);
+}
+
+bool Snake::isDead() const {
+	return isDead_;
+}
+
+void Snake::respawn() {
+	isDead_ = false;
+	snakeBody_.clear();
+	snakeBody_.push_back(map_.centerPos());
 }
 
 void Snake::die() {

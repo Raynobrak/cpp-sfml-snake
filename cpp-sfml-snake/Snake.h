@@ -9,10 +9,12 @@
 
 class Snake {
 public:
-	Snake(SnakeMap& map, sf::Vector2i startPos = {0,0});
+	Snake(SnakeMap& map);
 	std::vector<sf::Vector2i> getBody() const;
 	void move();
 	void changeDirection(Direction newDir);
+	bool isDead() const;
+	void respawn();
 private:
 	void die();
 	bool isThereSnakeBodyAt(sf::Vector2i position) const;

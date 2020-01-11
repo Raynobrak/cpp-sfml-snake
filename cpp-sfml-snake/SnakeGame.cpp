@@ -67,12 +67,14 @@ void SnakeGame::render() {
 	static const sf::Color SNAKE_ALIVE_COLOR = { 20,108,156 };
 	static const sf::Color SNAKE_DEAD_COLOR = { 127,39,36 };
 	static const sf::Color FOOD_COLOR = { 69,186,108 };
+	constexpr float FOOD_SIZE_MULTIPLIER = 0.8f;
 
 	auto foods = map_.getFoods();
 	for (const auto& foodPos : foods) {
 		sf::RectangleShape shape;
-		shape.setPosition(foodPos.x * tileWidth, foodPos.y * tileHeight);
-		shape.setSize({ tileWidth, tileHeight });
+		sf::Vector2f foodSize = sf::Vector2f(tileWidth, tileHeight) * FOOD_SIZE_MULTIPLIER;
+		shape.setPosition(sf::Vector2f(foodPos.x * tileWidth, foodPos.y * tileHeight) + 0.5f * (1.f - FOOD_SIZE_MULTIPLIER) * sf::Vector2f(tileWidth, tileHeight));
+		shape.setSize(foodSize);
 		shape.setFillColor(FOOD_COLOR);
 		window_.draw(shape);
 	}
@@ -83,8 +85,6 @@ void SnakeGame::render() {
 		shape.setPosition(pos.x * tileWidth, pos.y * tileHeight);
 		shape.setSize({ tileWidth, tileHeight });
 		shape.setFillColor(snake_.isDead() ? SNAKE_DEAD_COLOR : SNAKE_ALIVE_COLOR);
-		//shape.setOutlineThickness(1.f);
-		//shape.setOutlineColor(sf::Color::Black);
 		window_.draw(shape);
 	}
 

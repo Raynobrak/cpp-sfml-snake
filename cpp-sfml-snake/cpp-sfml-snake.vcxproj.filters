@@ -7,11 +7,16 @@
     <ClCompile Include="Snake.cpp" />
     <ClCompile Include="SnakeMap.cpp" />
     <ClCompile Include="Direction.cpp" />
+    <ClCompile Include="ValuesLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SnakeGame.h" />
     <ClInclude Include="Snake.h" />
     <ClInclude Include="SnakeMap.h" />
     <ClInclude Include="Direction.h" />
+    <ClInclude Include="ValuesLoader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="snake.settings" />
   </ItemGroup>
 </Project>

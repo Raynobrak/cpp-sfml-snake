@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <variant>
+#include <stdexcept>
 
 enum class ValType {
 	Integer,

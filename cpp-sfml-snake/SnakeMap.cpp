@@ -1,6 +1,9 @@
 #include "SnakeMap.h"
 
+#include "Snake.h"
+
 #include <random>
+
 // random number generator from Stroustrup: 
 // http://www.stroustrup.com/C++11FAQ.html#std-random
 int rand_int(int low, int high)
@@ -11,8 +14,8 @@ int rand_int(int low, int high)
 	return uid(re, Dist::param_type{ low,high });
 }
 
-SnakeMap::SnakeMap(int width, int height) : width_(width), height_(height) {
-	spawnNewFood();
+SnakeMap::SnakeMap(int width, int height, int maxFood, const Snake& snake) : width_(width), height_(height), maxFood_(maxFood), snake_(snake) {
+	addFood();
 }
 
 std::vector<sf::Vector2i> SnakeMap::getFoods() const
@@ -34,25 +37,26 @@ bool SnakeMap::isThereFoodAt(sf::Vector2i position) const {
 void SnakeMap::eatFoodAt(sf::Vector2i position) {
 	foodPositions_.erase(std::find(foodPositions_.begin(), foodPositions_.end(), position));
 	
-	if (foodPositions_.empty()) {
-		spawnNewFood();
-	}
+	addFood();
 }
 
 sf::Vector2i SnakeMap::centerPos() const {
 	return sf::Vector2i(width_ / 2, height_ / 2);
 }
 
-void SnakeMap::spawnNewFood() {
-	// todo : empêcher la nourriture d'apparaître *sur* le snake
-	for (int i = 0; i < 10; ++i) {
-		sf::Vector2i randomPosition;
+int SnakeMap::availableTilesCount() const
+{
+	return width_ * height_ - snake_.length() - foodPositions_.size();
+}
+
+void SnakeMap::addFood() {
+	auto snakeBody = snake_.getBody();
+
+	while (foodPositions_.size() < maxFood_ && availableTilesCount() > 0) {
+		sf::Vector2i newPos;
 		do {
-			randomPosition = { rand_int(0, width_ - 1), rand_int(0, height_ - 1) };
-
-		} while (isThereFoodAt(randomPosition));
-
-
-		foodPositions_.push_back(randomPosition);
+			newPos = { rand_int(0, width_ - 1), rand_int(0, height_ - 1) };
+		} while (snake_.occupiesPosition(newPos) || isThereFoodAt(newPos));
+		foodPositions_.push_back(newPos);
 	}
 }

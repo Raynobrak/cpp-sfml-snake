@@ -17,6 +17,6 @@
     <ClInclude Include="ValuesLoader.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="snake.settings" />
+    <None Include="snake_settings.txt" />
   </ItemGroup>
 </Project>

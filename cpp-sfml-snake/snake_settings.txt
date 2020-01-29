@@ -1,0 +1,9 @@
+map_width = 40
+map_height = 40
+
+window_width = 500
+window_height = 500
+
+max_amount_of_food = 1000
+
+time_between_moves = 0.1

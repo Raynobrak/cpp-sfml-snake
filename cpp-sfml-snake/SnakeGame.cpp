@@ -4,7 +4,7 @@
 
 #include "SnakeGame.h"
 
-SnakeGame::SnakeGame(SnakeGameSettings settings) : settings_(settings), map_(settings.mapWidth, settings.mapHeight), snake_(map_) {
+SnakeGame::SnakeGame(SnakeGameSettings settings) : settings_(settings), map_(settings.mapWidth, settings.mapHeight, settings.maxFood, snake_), snake_(map_) {
 	window_.create({ static_cast<unsigned int>(settings_.windowWidth),static_cast<unsigned int>(settings_.windowHeight) }, "Snake !");
 }
 

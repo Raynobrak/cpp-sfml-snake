@@ -51,6 +51,16 @@ void Snake::respawn() {
 	snakeBody_.push_back(map_.centerPos());
 }
 
+size_t Snake::length() const
+{
+	return snakeBody_.size();
+}
+
+bool Snake::occupiesPosition(sf::Vector2i pos) const
+{
+	return std::find(snakeBody_.begin(), snakeBody_.end(), pos) != snakeBody_.end();
+}
+
 void Snake::die() {
 	isDead_ = true;
 }

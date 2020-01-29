@@ -15,6 +15,8 @@ public:
 	void changeDirection(Direction newDir);
 	bool isDead() const;
 	void respawn();
+	size_t length() const;
+	bool occupiesPosition(sf::Vector2i pos) const;
 private:
 	void die();
 	bool isThereSnakeBodyAt(sf::Vector2i position) const;

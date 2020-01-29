@@ -10,10 +10,12 @@ struct SnakeGameSettings {
 	int windowWidth;
 	int windowHeight;
 
+	int maxFood;
+
 	float timeBetweenMoves;
 };
 
-constexpr SnakeGameSettings DEFAULT_SETTINGS = { 30, 20, 800, 500, 0.05f };
+constexpr SnakeGameSettings DEFAULT_SETTINGS = { 30, 20, 800, 500, 3, 0.05f };
 
 inline bool areSettingsValid(const SnakeGameSettings& settings) {
 	// todo analyser la configuration et trouver les erreurs de logique (par exemple : taille de la map négative).

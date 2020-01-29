@@ -7,22 +7,23 @@
 #include "SnakeGame.h"
 #include "ValuesLoader.h"
 
-const std::string SETTINGS_FILENAME = "snake.settings";
+const std::string SETTINGS_FILENAME = "snake_settings.txt";
 
 int main() {
-	std::vector<ValueFormat> valuesFormats = {
+	std::vector<ValFormat> valuesFormats = {
 		{"map_width", ValType::Integer},
 		{"map_height", ValType::Integer},
 
 		{"window_width", ValType::Integer},
 		{"window_height", ValType::Integer},
 
+		{"max_amount_of_food", ValType::Integer},
+
 		{"time_between_moves", ValType::Float},
 	};
-	ValuesLoader loader(valuesFormats);
-	loader.loadValuesFromFile(SETTINGS_FILENAME);
-	if (!loader.everythingIsFine()) {
-		auto errors = loader.getErrors();
+	ValuesLoader loader(valuesFormats, SETTINGS_FILENAME);
+	if (!loader.load()) {
+		const auto errors = loader.getErrorList();
 		for (const auto& err : errors) {
 			std::cout << err << std::endl;
 		}
@@ -35,6 +36,8 @@ int main() {
 
 	settings.windowWidth = loader.getValue<int>("window_width");
 	settings.windowHeight = loader.getValue<int>("window_height");
+
+	settings.maxFood = loader.getValue<int>("max_amount_of_food");
 
 	settings.timeBetweenMoves = loader.getValue<float>("time_between_moves");
 
